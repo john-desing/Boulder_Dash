@@ -15,6 +15,7 @@ public final class Controller implements IController {
 
 	/** The model. */
 	private IModel	model;
+	//john/
 
 	/**
 	 * Instantiates a new controller.
