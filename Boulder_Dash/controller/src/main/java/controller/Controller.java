@@ -16,8 +16,12 @@ public final class Controller implements IController {
 	/** The model. */
 	private IModel	model;
 	//john/
+	
+	
+	
 
 	/**
+	 * jgggfgfg
 	 * Instantiates a new controller.
 	 *
 	 * @param view
