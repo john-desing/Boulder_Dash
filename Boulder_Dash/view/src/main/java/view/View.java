@@ -10,7 +10,7 @@ import contract.IModel;
 import contract.IView;
 
 /**
- * The Class View. kjopoi
+ * The Class View. 
  *
  * @author Jean-Aymeric Diet
  */
