@@ -1,7 +1,7 @@
 package contract;
 
 /**
- * The Enum ControllerOrder.
+ * The Enum ControllerOrder.gds
  *
  * @author Jean-Aymeric Diet
  */
