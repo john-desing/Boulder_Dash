@@ -1,32 +1,43 @@
 package view;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
 /**
  * The Class ViewPanel.
  *
- * @author Jean-Aymeric Diet
+ * Draws inside the graphic interface.
+ *
+ *  @author BALOG Isreal
+ * @since 21-05-2020
  */
+
 class ViewPanel extends JPanel implements Observer {
 
-	/** The view frame. */
-	private ViewFrame					viewFrame;
-	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= -998294702363713521L;
+	/** The view frame */
 
-	/**
-	 * Instantiates a new view panel.
+	private ViewFrame viewFrame;
+	/** The Constant serialVersionUID. */
+
+	private static final long serialVersionUID = -998294702363713521L;
+
+	/** Instantiates a new view panel.
 	 *
-	 * @param viewFrame
-	 *          the view frame
+	 * @param viewFrame the view frame
 	 */
+
 	public ViewPanel(final ViewFrame viewFrame) {
 		this.setViewFrame(viewFrame);
 		viewFrame.getModel().getObservable().addObserver(this);
+
 	}
 
 	/**
@@ -34,6 +45,7 @@ class ViewPanel extends JPanel implements Observer {
 	 *
 	 * @return the view frame
 	 */
+
 	private ViewFrame getViewFrame() {
 		return this.viewFrame;
 	}
@@ -44,6 +56,7 @@ class ViewPanel extends JPanel implements Observer {
 	 * @param viewFrame
 	 *          the new view frame
 	 */
+
 	private void setViewFrame(final ViewFrame viewFrame) {
 		this.viewFrame = viewFrame;
 	}
@@ -56,15 +69,33 @@ class ViewPanel extends JPanel implements Observer {
 	public void update(final Observable arg0, final Object arg1) {
 		this.repaint();
 	}
-
 	/*
 	 * (non-Javadoc)
+	 *
+	 * Paints the graphic interface.
 	 *
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	@Override
 	protected void paintComponent(final Graphics graphics) {
 		graphics.clearRect(0, 0, this.getWidth(), this.getHeight());
-		graphics.drawString(this.getViewFrame().getModel().getHelloWorld().getMessage(), 10, 20);
+
+		ArrayList<entity.Tileset> DrawMap = this.getViewFrame().getModel().getMap();
+		BufferedImage imageTemp = null;
+
+		for (int i = 0; i < DrawMap.size(); i++) {
+
+			try {
+					imageTemp = ImageIO.read(new File("../sprites/" + DrawMap.get(i).getFactory().getName() + ".png"));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			graphics.drawImage(imageTemp, DrawMap.get(i).getX() * 32, DrawMap.get(i).getY() * 32, 32, 32, null);
+		}
+
+		this.repaint();
+
 	}
+
 }

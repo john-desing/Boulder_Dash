@@ -1,17 +1,15 @@
 package contract;
 
 /**
- * The Interface IView.
+ * The Interface IController.
  *
- * @author Jean-Aymeric Diet
+ * Shows methods other package need from View
+ *
+ * @author John Medy MBOKO
+ * @since  19-05-2020
  */
+
 public interface IView {
 
-	/**
-	 * Prints the message.
-	 *
-	 * @param message
-	 *          the message
-	 */
-	void printMessage(final String message);
 }
+

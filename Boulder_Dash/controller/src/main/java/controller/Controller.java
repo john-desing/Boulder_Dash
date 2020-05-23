@@ -1,95 +1,138 @@
 package controller;
 
-import contract.ControllerOrder;
-import contract.IController;
-import contract.IModel;
-import contract.IView;
+import contract.*;
+
 
 /**
  * The Class Controller.
+ *
+ * Makes the loop permitting the game to play,
+ *
+ *
+ * @author Fruissala
+ * @since  20-05-2020
  */
 public final class Controller implements IController {
 
-	/** The view. */
-	private IView		view;
+	/** The GameOver. */
+
+	private boolean isGameOver;
+
+	/** The TIME_SLEEP. */
+
+	private static int TIME_SLEEP = 30;
 
 	/** The model. */
-	private IModel	model;
+
+	private IModel model;
+
+	/** The view. */
+
+	private IView view;
 
 	/**
-	 
 	 * Instantiates a new controller.
 	 *
-	 * @param view
-	 *          the view
 	 * @param model
-	 *          the model
+	 * 			the model
+	 * @param view
+	 * 			the view
 	 */
-	public Controller(final IView view, final IModel model) {
+	public Controller(final IView view, final IModel model){
 		this.setView(view);
 		this.setModel(model);
 	}
 
-	/**
-     * Control.
-     */
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see contract.IController#control()
+
+	/** Plays gameLoop.
+	 * @throws InterruptedException
+	 * 				the InterruptedException
 	 */
-	public void control() {
-		this.view.printMessage("Appuyer sur les touches 'E', 'F', 'D' ou 'I', pour afficher Hello world dans la langue d votre choix.");
+	public void play() throws InterruptedException {
+		this.gameLoop();
+	}
+
+
+	/**
+	 * Runs the gameLoop until the game is over (calls all functionalities from the model).
+	 *
+	 * @throws InterruptedException
+	 * 						the InterruptedException
+	 *
+	 */
+	private void gameLoop() throws InterruptedException {
+		while (!this.isGameOver){
+			try {
+				Thread.sleep(TIME_SLEEP);
+			}
+			catch (final InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+			this.getModel().death();
+			this.getModel().win();
+			this.getModel().isFalling();
+			this.getModel().slip();
+			Thread.sleep(500);
+			this.getModel().monsterOrder();
+			Thread.sleep(300);
+		}
 	}
 
 	/**
-     * Sets the view.
-     *
-     * @param pview
-     *            the new view
-     */
-	private void setView(final IView pview) {
-		this.view = pview;
+	 * Gets the model.
+	 *
+	 * @return the model
+	 */
+
+	private IModel getModel(){
+		return this.model;
 	}
 
 	/**
-	 * Sets the model.
+	 * Sets the Model.
 	 *
 	 * @param model
-	 *          the new model
+	 * 			the model
+	 *
 	 */
-	private void setModel(final IModel model) {
+
+	private void setModel(final IModel model){
 		this.model = model;
 	}
 
 	/**
-     * Order perform.
-     *
-     * @param controllerOrder
-     *            the controller order
-     */
-	/*
-	 * (non-Javadoc)
+	 * Gets the view.
 	 *
-	 * @see contract.IController#orderPerform(contract.ControllerOrder)
+	 * @return the view
 	 */
-	public void orderPerform(final ControllerOrder controllerOrder) {
-		switch (controllerOrder) {
-			case English:
-				this.model.loadHelloWorld("GB");
-				break;
-			case Francais:
-				this.model.loadHelloWorld("FR");
-				break;
-			case Deutsch:
-				this.model.loadHelloWorld("DE");
-				break;
-			case Indonesia:
-				this.model.loadHelloWorld("ID");
-				break;
-			default:
-				break;
+
+	private IView getView(){
+		return this.view;
+	}
+
+	/**
+	 * Sets the view
+	 * @param view
+	 *			the view
+	 */
+	private void setView (final IView view) {
+		this.view = view;
+	}
+
+	/**
+	 * Orderperform checks the controllerOrder, whenever a controllerOrder is received, it calls the move method associated.
+	 *
+	 * @param controllerOrder
+	 * 				the controllerOrder
+	 */
+
+	@Override
+	public void orderPerform(ControllerOrder controllerOrder) {
+		if (controllerOrder != null){
+			this.getModel().move(controllerOrder);
 		}
 	}
+
+
 
 }

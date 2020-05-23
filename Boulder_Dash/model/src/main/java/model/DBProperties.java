@@ -8,6 +8,7 @@ import java.util.Properties;
  * The Class DBProperties.
  *
  * @author Jean-Aymeric Diet
+ * (This part has not been touch by the team, so we won't steal the work of our beloved JAD)
  */
 class DBProperties extends Properties {
 
@@ -18,10 +19,10 @@ class DBProperties extends Properties {
 	private final static String	PROPERTIES_FILE_NAME	= "model.properties";
 
 	/** The url. */
-	private String							url										= "";
+	private String							url										= "jdbc:mysql//localhost/javaproject";
 
 	/** The login. */
-	private String							login									= "";
+	private String							login									= "root";
 
 	/** The password. */
 	private String							password							= "";

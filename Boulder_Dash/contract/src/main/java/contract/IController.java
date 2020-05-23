@@ -3,14 +3,14 @@ package contract;
 /**
  * The Interface IController.
  *
- * @author Jean-Aymeric Diet
+ * Shows methods other package need from Controller
+ *
+ * @author John Medy MBOKO
+ * @since  19-05-2020
  */
+
 public interface IController {
 
-	/**
-	 * Control.
-	 */
-	public void control();
 
 	/**
 	 * Order perform.
@@ -18,5 +18,7 @@ public interface IController {
 	 * @param controllerOrder
 	 *          the controller order
 	 */
-	public void orderPerform(ControllerOrder controllerOrder);
+	void orderPerform(ControllerOrder controllerOrder);
+
+
 }
