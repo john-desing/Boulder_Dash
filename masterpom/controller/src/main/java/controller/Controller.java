@@ -49,7 +49,7 @@ public final class Controller implements IController {
 	 * @see contract.IController#control()
 	 */
 	public void control() {
-		this.view.printMessage("Press 'A', 'Z', 'E', 'R' or 'T' to generate the different levels");
+		this.view.printMessage("welcome to BoulderDash Game /n Press 'A', 'Z', 'E', 'R' or 'T' to generate the different levels");
 	}
 
 	/**
@@ -196,10 +196,10 @@ public final class Controller implements IController {
 			if (y == model.getDoorY() && x == model.getDoorX()) {
 				int level = model.getLevel();
 				if (level == 5) {
-					view.printMessage("Go buy the DLC <3");
+					view.printMessage("congratilation you win the last stage");
 					view.close();
 				} else {
-					view.printMessage("You won the level " + level);
+					view.printMessage("You win the level " + level);
 					model.loadMap(model.getLevel() + 1);
 				}
 			}
@@ -221,10 +221,10 @@ public final class Controller implements IController {
 			if (y == model.getDoorY() && x == model.getDoorX()) {
 				int level = model.getLevel();
 				if (level == 5) {
-					view.printMessage("Go buy the DLC <3");
+					view.printMessage("congratilation you win the last stage");
 					view.close();
 				} else {
-					view.printMessage("You won the level " + level);
+					view.printMessage("You win the level " + level);
 					model.loadMap(model.getLevel() + 1);
 				}
 			}
@@ -257,7 +257,7 @@ public final class Controller implements IController {
 			if (y == model.getDoorY() && x == model.getDoorX()) {
 				int level = model.getLevel();
 				if (level == 5) {
-					view.printMessage("Go buy the DLC <3");
+					view.printMessage("congratilation you win the last stage");
 					view.close();
 				} else {
 					view.printMessage("You win the level " + level);
@@ -293,7 +293,7 @@ public final class Controller implements IController {
 			if (y == model.getDoorY() && x == model.getDoorX()) {
 				int level = model.getLevel();
 				if (level == 5) {
-					view.printMessage("Go buy the DLC <3");
+					view.printMessage("congratilation you win the last stage");
 					view.close();
 				} else {
 					view.printMessage("You win the level " + level);
