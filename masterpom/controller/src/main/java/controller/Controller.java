@@ -260,7 +260,7 @@ public final class Controller implements IController {
 					view.printMessage("Go buy the DLC <3");
 					view.close();
 				} else {
-					view.printMessage("You won the level " + level);
+					view.printMessage("You win the level " + level);
 					model.loadMap(model.getLevel() + 1);
 				}
 			}
@@ -296,7 +296,7 @@ public final class Controller implements IController {
 					view.printMessage("Go buy the DLC <3");
 					view.close();
 				} else {
-					view.printMessage("You won the level " + level);
+					view.printMessage("You win the level " + level);
 					model.loadMap(model.getLevel() + 1);
 				}
 			}
