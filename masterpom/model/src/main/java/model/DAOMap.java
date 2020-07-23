@@ -5,17 +5,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import entity.Line;
+import entity.Map;
 
 /**
- * The Class DAOHelloWorld.
+ * The DAOMap class.
  *
- * @author Jean-Aymeric Diet
+ * @author  BOLOG Israel
+ * @author Fruissala KANWER
+ * @version 1.0
  */
-class DAOMap extends DAOEntity<Line>{
+public class DAOMap extends DAOEntity<Map> {
 
 	/**
-	 * Instantiates a new DAO hello world.
+	 * Instantiates a new DAO map.
 	 *
 	 * @param connection
 	 *          the connection
@@ -26,24 +28,62 @@ class DAOMap extends DAOEntity<Line>{
 		super(connection);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see model.DAOEntity#create(model.Entity)
+	 */
+	@Override
+	public boolean create(final Map entity) {
+		// Not implemented
+		return false;
+	}
 
-	public String find(int id, int map) {
-		String line = " ";
-		String name = "line" + map;	
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see model.DAOEntity#delete(model.Entity)
+	 */
+	@Override
+	public boolean delete(final Map entity) {
+		// Not implemented
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see model.DAOEntity#update(model.Entity)
+	 */
+	@Override
+	public boolean update(final Map entity) {
+		// Not implemented
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see model.DAOEntity#find(int)
+	 */
+	@Override
+	public Map find(final int id) {
+		//HelloWorld helloWorld = new HelloWorld();
+		Map map = new Map();
+		
 		try {
-			final String sql = "{call getLineMap1(?)}";
+			final String sql = "{call mapById(?)}";
 			final CallableStatement call = this.getConnection().prepareCall(sql);
 			call.setInt(1, id);
 			call.execute();
 			final ResultSet resultSet = call.getResultSet();
 			if (resultSet.first()) {
-				line = resultSet.getString(name);
+				map = new Map(id, resultSet.getString("levelContent"), resultSet.getInt("numberDiamondsNeeded"));
 			}
-			return line;
+			return map;
 		} catch (final SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
 }

@@ -7,4 +7,5 @@
   </parent>
   <artifactId>entity</artifactId>
   <name>Entity</name>
+  <description>The entity targets each specific object of the game, such as the player or the enemies.</description>
 </project>

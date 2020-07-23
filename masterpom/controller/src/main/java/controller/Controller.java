@@ -1,21 +1,14 @@
 package controller;
 
-import java.awt.Image;
-import java.util.ArrayList;
-
 import contract.ControllerOrder;
 import contract.IController;
 import contract.IModel;
 import contract.IView;
-import entity.Air;
-import entity.Diamond;
-import entity.Door;
-import entity.Entity;
 
 /**
  * The Class Controller.
- * @author Emannuel KANWE
- * @since 19-05-2020
+ * @author John Medy MBOKO
+ * @version 1.0
  */
 public final class Controller implements IController {
 
@@ -24,10 +17,6 @@ public final class Controller implements IController {
 
 	/** The model. */
 	private IModel model;
-/**
- * instantiate the new array list with all the threads
- */
-	ArrayList<Thread> threadList = new ArrayList<Thread>();
 
 	/**
 	 * Instantiates a new controller.
@@ -38,10 +27,16 @@ public final class Controller implements IController {
 	public Controller(final IView view, final IModel model) {
 		this.setView(view);
 		this.setModel(model);
+
+	}
+	
+	public Controller() {
+		
 	}
 
 	/**
 	 * Control.
+	 * Show a pop-up and print a specific message, about the game's rules.
 	 */
 	/*
 	 * (non-Javadoc)
@@ -49,7 +44,29 @@ public final class Controller implements IController {
 	 * @see contract.IController#control()
 	 */
 	public void control() {
-		this.view.printMessage("welcome to BoulderDash Game /n Press 'A', 'Z', 'E', 'R' or 'T' to generate the different levels");
+		this.view.printMessage(this.getMessageToShow());
+	}
+	
+	public String getMessageToShow() {
+		return "Welcome to Boulder_Dash ! Press any key to start the game.Press\n- 1 for Level 1 \n - 2 for Level 2 \n - 3 for Level 3\n - 4 for Level 4\n - 5 for Level 5\n - 6 for Level 6\n - 7 for Level 7\n  Use Z/Q/S/D to move the character.";
+	}
+	
+	/**
+	 * Start method.
+	 * Launch the model loop. Refresh each 100 milliseconds.
+	 */
+	
+	public void start() {
+		
+		while(true) {
+			this.model.loop();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -70,23 +87,9 @@ public final class Controller implements IController {
 		this.model = model;
 	}
 
-	public IModel getModel() {
-		return this.model;
-	}
-/**
- * Check if the thread is already launched. If not launched, it launch it.
- */
-	private void threadCreation() {
-		if (threadList.isEmpty()) {
-			BoulderThread thread = new BoulderThread("thread", view, model);
-			threadList.add(thread);
-			threadList.get(0).start();
-		}
-	}
-
 	/**
 	 * Order perform.
-	 *
+	 * Execute specific method depending on the order.
 	 * @param controllerOrder the controller order
 	 */
 	/*
@@ -95,215 +98,50 @@ public final class Controller implements IController {
 	 * @see contract.IController#orderPerform(contract.ControllerOrder)
 	 */
 	public void orderPerform(final ControllerOrder controllerOrder) {
-		switch (controllerOrder) {
-		case map1:
-			this.model.loadMap(1);
-			threadCreation();
-			break;
-		case map2:
-			this.model.loadMap(2);
-			threadCreation();
-			break;
-		case map3:
-			this.model.loadMap(3);
-			threadCreation();
-			break;
-		case map4:
-			this.model.loadMap(4);
-			threadCreation();
-			break;
-		case map5:
-			this.model.loadMap(5);
-			threadCreation();
-			break;
-		default:
-			break;
-		}
-	}
 
-	public void movement(int KeyCode) {
-		swap(model.getTabEntity(), model.getMap(), KeyCode);
-		if (model.getCharacter().getNbDiamond() == 10) {
-			Door door = new Door(model.getDoorY(), model.getDoorX());
-			model.setTabEntity(model.getDoorY(), model.getDoorX(), door);
-			model.setMap(model.getDoorY(), model.getDoorX(), door.getSpritePath());
+			switch (controllerOrder) {
+			case Map1:
+				this.model.loadMap(1);
+				break;
+			case Map2:
+				this.model.loadMap(2);
+				break;
+			case Map3:
+				this.model.loadMap(3);
+				break;
+			case Map4:
+				this.model.loadMap(4);
+				break;
+			case Map5:
+				this.model.loadMap(5);
+				break;
+			case Map6:
+				this.model.loadMap(6);
+				break;
+			case Map7:
+				this.model.loadMap(7);
+				break;
+			case Z:
+				this.model.getMap().getPlayer().movePlayer('Z');
+				//this.model.modelNotify();
+				break;
+			case Q:
+				this.model.getMap().getPlayer().movePlayer('Q');
+				//this.model.modelNotify();
+				break;
+			case S:
+				this.model.getMap().getPlayer().movePlayer('S');
+				//this.model.modelNotify();
+				break;
+			case D:
+				this.model.getMap().getPlayer().movePlayer('D');
+				//this.model.modelNotify();
+				break;
+			default:
+				break;
+			}
+			
 		}
-	}
-/**
- * 
- * @param entity
- * 		The entity
- * @return
- * 		return entity.getcanbedestroyed
- */
-	private Boolean check(Entity entity) {
-		return entity.getCanBeDestroyed();
-	}
-/**
- * 
- * @param entity
- * 		The entity
- * @return
- * 		Check if there is a Diamond
- */
-	private Boolean checkDiamond(Entity entity) {
-		if (entity instanceof Diamond) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-/**
- * 
- * @param entity
- * 		The entity
- * @return
- * 		Check if the entity can be pushed
- */
-	private Boolean checkPushed(Entity entity) {
+	
 
-		return entity.getCanBePushed();
-	}
-/**
- * Intervert the player's position with the position of the entity where he wants to go to generate movement.
- * @param tabEntity
- * 		An array of entity
- * @param tabImage
- * 		An array of sprite
- * @param i
- * 		Get the keycode of the key
- */
-	public void swap(Entity[][] tabEntity, Image[][] tabImage, int i) {
-		Entity entity;
-		Image image;
-		int y = model.getPosX();
-		int x = model.getPosY();
-		switch (i) {
-		case 38:
-			if (check(tabEntity[y - 1][x])) {
-				entity = tabEntity[y][x];
-				image = tabImage[y][x];
-				if (tabEntity[y - 1][x] instanceof Diamond) {
-					model.getCharacter().setNbDiamond(model.getCharacter().getNbDiamond() + 1);
-				}
-				Air air = new Air(x, y);
-				tabEntity[y][x] = air;
-				tabEntity[y - 1][x] = entity;
-				tabImage[y][x] = air.getSpritePath();
-				tabImage[y - 1][x] = image;
-				model.setPosX(-1);
-			}
-			if (y == model.getDoorY() && x == model.getDoorX()) {
-				int level = model.getLevel();
-				if (level == 5) {
-					view.printMessage("congratilation you win the last stage");
-					view.close();
-				} else {
-					view.printMessage("You win the level " + level);
-					model.loadMap(model.getLevel() + 1);
-				}
-			}
-			break;
-		case 40:
-			if (check(tabEntity[y + 1][x])) {
-				entity = tabEntity[y][x];
-				if (checkDiamond(tabEntity[y + 1][x])) {
-					model.getCharacter().setNbDiamond(model.getCharacter().getNbDiamond() + 1);
-				}
-				Air air = new Air(x, y);
-				tabEntity[y][x] = air;
-				tabEntity[y + 1][x] = entity;
-				image = tabImage[y][x];
-				tabImage[y][x] = air.getSpritePath();
-				tabImage[y + 1][x] = image;
-				model.setPosX(1);
-			}
-			if (y == model.getDoorY() && x == model.getDoorX()) {
-				int level = model.getLevel();
-				if (level == 5) {
-					view.printMessage("congratilation you win the last stage");
-					view.close();
-				} else {
-					view.printMessage("You win the level " + level);
-					model.loadMap(model.getLevel() + 1);
-				}
-			}
-			break;
-		case 39:
-			if (check(tabEntity[y][x + 1])) {
-				entity = tabEntity[y][x];
-				if (checkDiamond(tabEntity[y][x + 1])) {
-					model.getCharacter().setNbDiamond(model.getCharacter().getNbDiamond() + 1);
-				}
-				Air air = new Air(x, y);
-				tabEntity[y][x] = air;
-				tabEntity[y][x + 1] = entity;
-				image = tabImage[y][x];
-				tabImage[y][x] = air.getSpritePath();
-				tabImage[y][x + 1] = image;
-				model.setPosY(1);
-			}
-			if (checkPushed(tabEntity[y][x + 1])) {
-				entity = tabEntity[y][x + 2];
-				tabEntity[y][x + 2] = tabEntity[y][x + 1];
-				tabEntity[y][x + 1] = tabEntity[y][x];
-				tabEntity[y][x] = entity;
-				image = tabImage[y][x + 2];
-				tabImage[y][x + 2] = tabImage[y][x + 1];
-				tabImage[y][x + 1] = tabImage[y][x];
-				tabImage[y][x] = image;
-				model.setPosY(1);
-			}
-			if (y == model.getDoorY() && x == model.getDoorX()) {
-				int level = model.getLevel();
-				if (level == 5) {
-					view.printMessage("congratilation you win the last stage");
-					view.close();
-				} else {
-					view.printMessage("You win the level " + level);
-					model.loadMap(model.getLevel() + 1);
-				}
-			}
-			break;
-		case 37:
-			if (check(tabEntity[y][x - 1])) {
-				entity = tabEntity[y][x];
-				if (checkDiamond(tabEntity[y][x - 1])) {
-					model.getCharacter().setNbDiamond(model.getCharacter().getNbDiamond() + 1);
-				}
-				Air air = new Air(x, y);
-				tabEntity[y][x] = air;
-				tabEntity[y][x - 1] = entity;
-				image = tabImage[y][x];
-				tabImage[y][x] = air.getSpritePath();
-				tabImage[y][x - 1] = image;
-				model.setPosY(-1);
-			}
-			if (checkPushed(tabEntity[y][x - 1])) {
-				entity = tabEntity[y][x - 2];
-				tabEntity[y][x - 2] = tabEntity[y][x - 1];
-				tabEntity[y][x - 1] = tabEntity[y][x];
-				tabEntity[y][x] = entity;
-				image = tabImage[y][x - 2];
-				tabImage[y][x - 2] = tabImage[y][x - 1];
-				tabImage[y][x - 1] = tabImage[y][x];
-				tabImage[y][x] = image;
-				model.setPosY(-1);
-			}
-			if (y == model.getDoorY() && x == model.getDoorX()) {
-				int level = model.getLevel();
-				if (level == 5) {
-					view.printMessage("congratilation you win the last stage");
-					view.close();
-				} else {
-					view.printMessage("You win the level " + level);
-					model.loadMap(model.getLevel() + 1);
-				}
-			}
-			break;
-		default:
-			break;
-		}
-		model.update();
-	}
 }

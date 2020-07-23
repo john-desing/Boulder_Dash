@@ -7,6 +7,7 @@
   </parent>
   <artifactId>controller</artifactId>
   <name>Controller</name>
+  <description>The controller creates a link between the view and the model.</description>
   <dependencies>
   	<dependency>
   		<groupId>jpublankproject</groupId>

@@ -10,15 +10,15 @@ import contract.IModel;
 import contract.IView;
 
 /**
- * The Class View.
+ * The View class.
  *
- * @author Jean-Aymeric Diet
+ * @author Fruissala KANWER
+ * @version 1.0
  */
 public final class View implements IView, Runnable {
 
 	/** The frame. */
-	private final ViewFrame viewFrame;
-	
+	private ViewFrame viewFrame = null;
 
 	/**
 	 * Instantiates a new view.
@@ -30,43 +30,63 @@ public final class View implements IView, Runnable {
 		this.viewFrame = new ViewFrame(model);
 		SwingUtilities.invokeLater(this);
 	}
+	
+	public View() {
+		
+	}
 
 	/**
 	 * Key code to controller order.
 	 *
 	 * @param keyCode
-	 *          the key code
+	 *          the key code 
 	 * @return the controller order
 	 */
 	protected static ControllerOrder keyCodeToControllerOrder(final int keyCode) {
 		switch (keyCode) {
-			case KeyEvent.VK_A:
-				return ControllerOrder.map1;
-			case KeyEvent.VK_Z:
-				return ControllerOrder.map2;
-			case KeyEvent.VK_E:
-				return ControllerOrder.map3;
-			case KeyEvent.VK_R:
-				return ControllerOrder.map4;
-			case KeyEvent.VK_T:
-				return ControllerOrder.map5;
-				default:				
-				return null;
+			case KeyEvent.VK_UP:
+				return ControllerOrder.Z;	
+			case KeyEvent.VK_LEFT:
+				return ControllerOrder.Q;
+			case KeyEvent.VK_DOWN:
+				return ControllerOrder.S;
+			case KeyEvent.VK_RIGHT:
+				return ControllerOrder.D;
+			case KeyEvent.VK_1:
+				return ControllerOrder.Map1;
+			case KeyEvent.VK_2:
+				return ControllerOrder.Map2;
+			case KeyEvent.VK_3:
+				return ControllerOrder.Map3;
+			case KeyEvent.VK_4:
+				return ControllerOrder.Map4;
+			case KeyEvent.VK_5:
+				return ControllerOrder.Map5;
+			case KeyEvent.VK_6:
+				return ControllerOrder.Map6;
+			case KeyEvent.VK_7:
+				return ControllerOrder.Map7;	
+			default:
+				return ControllerOrder.nothing;
 		}
 	}
-
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see contract.IView#printMessage(java.lang.String)
+	 */
 	public void printMessage(final String message) {
+		
 		this.viewFrame.printMessage(message);
 	}
 
-
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
-		this.viewFrame.setVisible(true);
-	}
-	
-	public void close() {
-		this.viewFrame.dispose();
-		System.exit(0);
+			this.viewFrame.setVisible(true);
 	}
 
 	/**

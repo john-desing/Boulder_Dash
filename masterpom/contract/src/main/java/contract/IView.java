@@ -3,19 +3,16 @@ package contract;
 /**
  * The Interface IView.
  *
- * @author Jean-Aymeric Diet
- */
+ * @author  Fruissalla KANWER
+ * @version 1.0
+ */ 
 public interface IView {
 
 	/**
 	 * Prints the message.
 	 *
-	 * @param message the message
+	 * @param message
+	 *          the message
 	 */
 	void printMessage(final String message);
-
-	/**
-	 * Closes the Window and exits the Program
-	 */
-	public void close();
 }

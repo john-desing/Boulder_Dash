@@ -7,6 +7,7 @@
   </parent>
   <artifactId>model</artifactId>
   <name>Model</name>
+   <description>The model stores data about the game.</description>
   <dependencies>
   	<dependency>
   		<groupId>jpublankproject</groupId>

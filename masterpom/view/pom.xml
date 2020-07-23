@@ -7,6 +7,7 @@
   </parent>
   <artifactId>view</artifactId>
   <name>View</name>
+  <description>The view interacts directly with the player by displaying the game.</description>
   <dependencies>
   	<dependency>
   		<groupId>jpublankproject</groupId>
